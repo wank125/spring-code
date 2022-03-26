@@ -19,15 +19,24 @@ public class ApiTest {
 //        userService.queryUserInfo();
 
 
+//        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+//        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+//
+//        beanFactory.registerBeanDefinition("userService", beanDefinition);
+//        //获取
+//        UserService userServive = (UserService) beanFactory.getBean("userService");
+//        userServive.queryUserInfo();
+//        //第二次获取
+//        UserService userServive_singleton = (UserService) beanFactory.getBean("userService");
+//        userServive_singleton.queryUserInfo();
+
+
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
 
         beanFactory.registerBeanDefinition("userService", beanDefinition);
-        //获取
-        UserService userServive = (UserService) beanFactory.getBean("userService");
-        userServive.queryUserInfo();
-        //第二次获取
-        UserService userServive_singleton = (UserService) beanFactory.getBean("userService");
-        userServive_singleton.queryUserInfo();
+        UserService bean = (UserService) beanFactory.getBean("userService", "小副");
+        bean.queryUserInfo();
+
     }
 }
