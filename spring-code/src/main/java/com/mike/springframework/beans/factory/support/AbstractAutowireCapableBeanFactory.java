@@ -1,7 +1,11 @@
 package com.mike.springframework.beans.factory.support;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.mike.springframework.beans.BeanException;
+import com.mike.springframework.beans.PropertyValue;
+import com.mike.springframework.beans.PropertyValues;
 import com.mike.springframework.beans.factory.config.BeanDefinition;
+import com.mike.springframework.beans.factory.config.BeanReference;
 
 import java.lang.reflect.Constructor;
 
@@ -14,6 +18,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         Object bean = null;
         bean = createBeanInstance(beanDefinition, beanName, args);
+        applyPropertyValues(beanName, bean, beanDefinition);
+
         addSingleton(beanName, bean);
         return bean;
     }
@@ -35,7 +41,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructor, args);
 
-
     }
 
     public InstantiationStrategy getInstantiationStrategy() {
@@ -44,5 +49,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
+    }
+
+    protected void applyPropertyValues(String beanName, Object object, BeanDefinition beanDefinition) {
+        PropertyValues propertyValues = beanDefinition.getPropertyValues();
+        for (PropertyValue pp : propertyValues.getPpValueArrayList()) {
+            String name = pp.getName();
+            Object value = pp.getValue();
+
+            if (value instanceof BeanReference) {
+                BeanReference beanRef = (BeanReference) value;
+                value = getBean(beanRef.getBeanName());
+            }
+            BeanUtil.setProperty(object, name, value);
+        }
+
     }
 }
