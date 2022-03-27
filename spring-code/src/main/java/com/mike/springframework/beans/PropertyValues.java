@@ -6,9 +6,11 @@ import java.util.Optional;
 public class PropertyValues {
     private final ArrayList<PropertyValue> ppValueArrayList = new ArrayList<PropertyValue>();
 
-    public void addProtertyValue(PropertyValue pv) {
+    public void addPropertyValue(PropertyValue pv) {
         this.ppValueArrayList.add(pv);
     }
+
+
 
     public PropertyValue[] getPpValueArrayList() {
         return ppValueArrayList.toArray(new PropertyValue[0]);

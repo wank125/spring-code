@@ -26,8 +26,8 @@ public class ApiTest {
 
         //UserService 设置属性
         PropertyValues propertyValues = new PropertyValues();
-        propertyValues.addProtertyValue(new PropertyValue("uId", "10001"));
-        propertyValues.addProtertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
+        propertyValues.addPropertyValue(new PropertyValue("uId", "10001"));
+        propertyValues.addPropertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
 
         //UserService 注入bean
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
